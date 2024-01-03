@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 // Check if the choice matches the saved progress
                 if (savedProgress[index] === choice) {
-                    choiceElement.setAttribute("checked", true);
+                    choiceElement.checked = true; // Set the checked property directly
                 }
 
                 const choiceText = document.createTextNode(choice);
@@ -104,6 +104,7 @@ document.addEventListener("DOMContentLoaded", function () {
         scoreContainer.innerHTML = `Your Score is ${score} out of 5.`;
     }
 });
+
 
 
 
