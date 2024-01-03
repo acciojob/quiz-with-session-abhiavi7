@@ -75,6 +75,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
             questionsContainer.appendChild(questionElement);
         });
+
+        // Log savedProgress for debugging
+        console.log("savedProgress:", savedProgress);
     }
 
     // Function to calculate the quiz score
@@ -101,5 +104,6 @@ document.addEventListener("DOMContentLoaded", function () {
         scoreContainer.innerHTML = `Your Score is ${score} out of 5.`;
     }
 });
+
 
 
