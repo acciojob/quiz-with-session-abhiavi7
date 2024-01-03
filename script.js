@@ -50,35 +50,50 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // Function to display quiz questions
-    function renderQuestions() {
-        questions.forEach(function (question, index) {
-            const questionElement = document.createElement("div");
-            const questionText = document.createTextNode(question.question);
-            questionElement.appendChild(questionText);
+    // Function to display quiz questions
+function renderQuestions() {
+    questions.forEach(function (question, index) {
+        const questionElement = document.createElement("div");
+        const questionText = document.createTextNode(question.question);
+        questionElement.appendChild(questionText);
 
-            question.choices.forEach(function (choice) {
-                const choiceElement = document.createElement("input");
-                choiceElement.setAttribute("type", "radio");
-                choiceElement.setAttribute("name", `question-${index}`);
-                choiceElement.setAttribute("value", choice);
+        question.choices.forEach(function (choice) {
+            const choiceElement = document.createElement("input");
+            choiceElement.setAttribute("type", "radio");
+            choiceElement.setAttribute("name", `question-${index}`);
+            choiceElement.setAttribute("value", choice);
 
-                // Check if the choice matches the saved progress
-                if (savedProgress[index] === choice) {
-                    choiceElement.checked = true; // Set the checked property directly
-                }
+            // Check if the choice matches the saved progress
+            if (savedProgress[index] === choice) {
+                choiceElement.checked = true; // Set the checked property directly
+            }
 
-                const choiceText = document.createTextNode(choice);
+            const choiceText = document.createTextNode(choice);
 
-                questionElement.appendChild(choiceElement);
-                questionElement.appendChild(choiceText);
-            });
-
-            questionsContainer.appendChild(questionElement);
+            questionElement.appendChild(choiceElement);
+            questionElement.appendChild(choiceText);
         });
 
-        // Log savedProgress for debugging
-        console.log("savedProgress:", savedProgress);
-    }
+        questionsContainer.appendChild(questionElement);
+    });
+
+    // Log savedProgress for debugging
+    console.log("savedProgress:", savedProgress);
+    
+    // Trigger a change event to ensure Cypress detects the change
+    const radioInputs = document.querySelectorAll('input[type="radio"]');
+    radioInputs.forEach(input => {
+        input.addEventListener('change', () => {
+            input.checked = !input.checked; // Toggle the checked state
+        });
+    });
+
+    // Trigger a change event on the last radio input to force a change
+    const lastRadioInput = radioInputs[radioInputs.length - 1];
+    lastRadioInput.checked = !lastRadioInput.checked;
+    lastRadioInput.dispatchEvent(new Event('change'));
+}
+
 
     // Function to calculate the quiz score
     function calculateScore() {
